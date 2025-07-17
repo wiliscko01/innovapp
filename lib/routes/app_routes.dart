@@ -10,6 +10,7 @@ import '../presentation/user_profile/user_profile.dart';
 import '../presentation/auth/login_screen.dart';
 import '../presentation/auth/register_screen.dart';
 import '../presentation/ai_chatbot_management/ai_chatbot_management.dart';
+import '../presentation/ai_settings/ai_settings_page.dart';
 
 class AppRoutes {
   // TODO: Add your routes here
@@ -25,6 +26,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String aiChatbotManagement = '/ai-chatbot-management';
+  static const String aiSettings = '/ai-settings';
 
   static Map<String, WidgetBuilder> routes = {
     initial: (context) => const OnboardingFlow(),
@@ -39,6 +41,7 @@ class AppRoutes {
     login: (context) => const LoginScreen(),
     register: (context) => const RegisterScreen(),
     aiChatbotManagement: (context) => const AiChatbotManagement(),
+    aiSettings: (context) => const AiSettingsPage(),
     // TODO: Add your other routes here
   };
 }

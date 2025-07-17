@@ -6,8 +6,8 @@ class AppTheme {
   AppTheme._();
 
   // Color specifications based on design requirements
-  static const Color primaryOrange = Color(0xFFFFA500);
-  static const Color primaryBlue = Color(0xFF007BFF);
+  static const Color primaryOrange = Color(0xFFFFA500); // #FFA500
+  static const Color primaryBlue = Color(0xFF007BFF);   // #007BFF
   static const Color successGreen = Color(0xFF28A745);
   static const Color warningAmber = Color(0xFFFFC107);
   static const Color errorRed = Color(0xDC3545);

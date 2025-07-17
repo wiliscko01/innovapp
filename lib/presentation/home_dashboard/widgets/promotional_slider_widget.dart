@@ -56,7 +56,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
     }
 
     return Container(
-      height: 25.h,
+      height: 35.h,
       margin: EdgeInsets.symmetric(horizontal: 4.w),
       child: Column(
         children: [
@@ -100,13 +100,19 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Stack(
+            fit: StackFit.expand,
             children: [
               // Background Image
-              CustomImageWidget(
-                imageUrl: banner['imageUrl'] as String,
-                width: double.infinity,
-                height: double.infinity,
-                fit: BoxFit.cover,
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(banner['imageUrl'] as String),
+                    fit: BoxFit.cover,
+                    onError: (exception, stackTrace) {
+                      // Fallback to a default image or color
+                    },
+                  ),
+                ),
               ),
 
               // Gradient Overlay
@@ -126,7 +132,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
 
               // Content
               Positioned(
-                bottom: 4.h,
+                bottom: 6.h,
                 left: 4.w,
                 right: 4.w,
                 child: Column(
@@ -135,7 +141,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
                     // Discount Badge
                     Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 3.w,
+                        horizontal: 4.w,
                         vertical: 1.h,
                       ),
                       decoration: BoxDecoration(
@@ -148,6 +154,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
                             AppTheme.lightTheme.textTheme.labelSmall?.copyWith(
                           color: banner['backgroundColor'] as Color,
                           fontWeight: FontWeight.w700,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
@@ -159,6 +166,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
                       style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(
                         color: AppTheme.surfaceWhite,
                         fontWeight: FontWeight.w700,
+                        fontSize: 20.sp,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -169,6 +177,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
                       banner['subtitle'] as String,
                       style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
                         color: AppTheme.surfaceWhite.withValues(alpha: 0.9),
+                        fontSize: 14.sp,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -176,25 +185,34 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
                     SizedBox(height: 1.h),
 
                     // Action Button
-                    ElevatedButton(
+                    Container(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
                       onPressed: () => widget.onBannerTap(banner),
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          color: banner['backgroundColor'] as Color,
+                          size: 18,
+                        ),
+                        label: Text(
+                          banner['actionText'] as String,
+                          style: AppTheme.lightTheme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.sp,
+                          ),
+                        ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.surfaceWhite,
                         foregroundColor: banner['backgroundColor'] as Color,
                         padding: EdgeInsets.symmetric(
-                          horizontal: 4.w,
-                          vertical: 1.h,
+                          horizontal: 6.w,
+                          vertical: 1.5.h,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        elevation: 2,
                       ),
-                      child: Text(
-                        banner['actionText'] as String,
-                        style:
-                            AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
                       ),
                     ),
                   ],
@@ -213,7 +231,7 @@ class _PromotionalSliderWidgetState extends State<PromotionalSliderWidget> {
       children: List.generate(
         widget.banners.length,
         (index) => Container(
-          width: _currentIndex == index ? 8.w : 2.w,
+          width: _currentIndex == index ? 10.w : 3.w,
           height: 1.h,
           margin: EdgeInsets.symmetric(horizontal: 1.w),
           decoration: BoxDecoration(

@@ -411,4 +411,59 @@ class _AiChatbotManagementState extends State<AiChatbotManagement>
         break;
     }
   }
+
+  void _showCreateChatbotDialog() {
+    // Check if user is authenticated
+    if (!_supabaseService.isAuthenticated) {
+      Navigator.pushNamed(
+        context,
+        AppRoutes.login,
+        arguments: AppRoutes.aiChatbotManagement,
+      );
+      return;
+    }
+
+    // Navigate to AI Settings page instead of showing dialog
+    Navigator.pushNamed(context, AppRoutes.aiSettings);
+  }
+
+  void _showEditChatbotDialog(Map<String, dynamic> chatbot) {
+    Navigator.pushNamed(context, AppRoutes.aiSettings);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppTheme.lightTheme.scaffoldBackgroundColor,
+      appBar: _buildAppBar(),
+      body: _isLoading ? _buildLoadingView() : _buildChatbotsList(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _showCreateChatbotDialog,
+        backgroundColor: AppTheme.primaryOrange,
+        icon: const Icon(Icons.add),
+        label: const Text('Nouveau chatbot'),
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  void _handleTabTap(int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, AppRoutes.homeDashboard);
+        break;
+      case 1:
+        Navigator.pushNamed(context, AppRoutes.serviceCatalog);
+        break;
+      case 2:
+        Navigator.pushNamed(context, AppRoutes.orderTracking);
+        break;
+      case 3:
+        // Already on AI management
+        break;
+      case 4:
+        Navigator.pushNamed(context, AppRoutes.userProfile);
+        break;
+    }
+  }
 }

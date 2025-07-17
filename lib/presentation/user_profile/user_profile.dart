@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../core/app_export.dart';
+import '../../services/supabase_service.dart';
 import './widgets/feexpay_payment_widget.dart';
 import './widgets/language_currency_widget.dart';
 import './widgets/order_history_widget.dart';
@@ -19,6 +21,8 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  final _supabaseService = SupabaseService();
+  Map<String, dynamic>? _userProfile;
   bool _isEditing = false;
 
   // User data
@@ -110,12 +114,34 @@ class _UserProfileState extends State<UserProfile>
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _tabController.index = 4; // Set Profile tab as active
+    _loadUserProfile();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadUserProfile() async {
+    try {
+      final profile = await _supabaseService.getUserProfile();
+      if (profile != null && mounted) {
+        setState(() {
+          _userProfile = profile;
+          _userData['name'] = profile['full_name'] ?? 'Utilisateur';
+          _userData['email'] = profile['email'] ?? '';
+          _userData['phone'] = profile['phone'] ?? '';
+        });
+      }
+    } catch (error) {
+      if (mounted) {
+        Fluttertoast.showToast(
+          msg: 'Erreur lors du chargement du profil',
+          backgroundColor: AppTheme.errorRed,
+        );
+      }
+    }
   }
 
   @override
@@ -126,6 +152,7 @@ class _UserProfileState extends State<UserProfile>
       body: SingleChildScrollView(
         child: Column(
           children: [
+            _buildQuickActions(),
             // Profile Header
             ProfileHeaderWidget(
               userData: _userData,
@@ -250,6 +277,67 @@ class _UserProfileState extends State<UserProfile>
         ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildQuickActions() {
+    return Container(
+      margin: EdgeInsets.all(4.w),
+      padding: EdgeInsets.all(4.w),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceWhite,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.shadowLight,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Actions rapides',
+            style: AppTheme.lightTheme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 2.h),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.aiChatbotManagement);
+                  },
+                  icon: const Icon(Icons.smart_toy, size: 20),
+                  label: const Text('Gérer mon IA'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryOrange,
+                    foregroundColor: AppTheme.surfaceWhite,
+                    padding: EdgeInsets.symmetric(vertical: 2.h),
+                  ),
+                ),
+              ),
+              SizedBox(width: 3.w),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _handleLogout,
+                  icon: const Icon(Icons.logout, color: AppTheme.errorRed),
+                  label: const Text('Déconnexion'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppTheme.errorRed,
+                    side: const BorderSide(color: AppTheme.errorRed),
+                    padding: EdgeInsets.symmetric(vertical: 2.h),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -492,7 +580,45 @@ class _UserProfileState extends State<UserProfile>
   }
 
   void _handleLogout() {
-    _showLogoutDialog();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Déconnexion'),
+        content: const Text('Êtes-vous sûr de vouloir vous déconnecter?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              try {
+                await _supabaseService.signOut();
+                if (mounted) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.login,
+                    (route) => false,
+                  );
+                }
+              } catch (error) {
+                if (mounted) {
+                  Fluttertoast.showToast(
+                    msg: 'Erreur lors de la déconnexion',
+                    backgroundColor: AppTheme.errorRed,
+                  );
+                }
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.errorRed,
+            ),
+            child: const Text('Déconnexion'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showCancelSubscriptionDialog() {
