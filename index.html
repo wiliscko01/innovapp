@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inno'v Group Mobile App Preview</title>
+    <title>Inno'v Group Mobile App</title>
     <style>
         * {
             margin: 0;
@@ -78,6 +78,16 @@
             padding-bottom: 20px;
         }
 
+        .page {
+            display: none;
+            height: 100%;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page Styles */
         .promotional-slider {
             height: 35vh;
             position: relative;
@@ -221,98 +231,377 @@
             color: #6C757D;
         }
 
-        .featured-services {
-            margin: 20px;
+        /* Profile Page Styles */
+        .profile-header {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(0, 123, 255, 0.1));
+            padding: 30px 20px;
+            text-align: center;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .service-image {
-            height: 120px;
-            background: linear-gradient(45deg, #FFA500, #007BFF);
-            position: relative;
-        }
-
-        .discount-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #DC3545;
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #FFA500;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
             color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 10px;
+            border: 3px solid #FFA500;
+        }
+
+        .profile-name {
+            font-size: 24px;
             font-weight: 700;
-        }
-
-        .service-content {
-            padding: 15px;
-        }
-
-        .service-title {
-            font-size: 14px;
-            font-weight: 600;
             color: #212529;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
-        .service-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-
-        .stars {
-            color: #FFC107;
-            font-size: 12px;
-        }
-
-        .rating-text {
-            font-size: 12px;
-            color: #6C757D;
-        }
-
-        .service-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
+        .profile-email {
             font-size: 16px;
+            color: #6C757D;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
             font-weight: 700;
             color: #FFA500;
         }
 
-        .order-btn {
+        .stat-label {
+            font-size: 12px;
+            color: #6C757D;
+        }
+
+        .profile-actions {
+            padding: 20px;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #FFA500;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #E9ECEF;
+            color: #6C757D;
+            border: 1px solid #DEE2E6;
+        }
+
+        .btn-danger {
+            background: #DC3545;
+            color: white;
+        }
+
+        /* AI Settings Page Styles */
+        .ai-settings {
+            padding: 20px;
+        }
+
+        .settings-header {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), rgba(0, 123, 255, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .settings-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 165, 0, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #FFA500;
+        }
+
+        .settings-info h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 5px;
+        }
+
+        .settings-info p {
+            font-size: 14px;
+            color: #6C757D;
+        }
+
+        .form-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 165, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFA500;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #212529;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #DEE2E6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #FFA500;
+            box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #DEE2E6;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .switch.active {
+            background: #FFA500;
+        }
+
+        .switch-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .switch.active .switch-thumb {
+            transform: translateX(26px);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #DEE2E6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-item:hover {
+            background: #F8F9FA;
+        }
+
+        .radio-item.selected {
+            border-color: #FFA500;
+            background: rgba(255, 165, 0, 0.1);
+        }
+
+        .radio-circle {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #DEE2E6;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .radio-item.selected .radio-circle {
+            border-color: #FFA500;
+        }
+
+        .radio-item.selected .radio-circle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 8px;
+            height: 8px;
+            background: #FFA500;
+            border-radius: 50%;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 15px;
             background: #FFA500;
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 20px;
         }
 
+        .save-btn:hover {
+            background: #e6940a;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: #FFA500;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            font-size: 16px;
+            color: #6C757D;
+        }
+
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #FFA500;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .demo-info {
+            background: rgba(0, 123, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 123, 255, 0.3);
+        }
+
+        .demo-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .demo-credentials {
+            font-size: 12px;
+            color: #6C757D;
+            line-height: 1.4;
+        }
+
+        /* Bottom Navigation */
         .bottom-nav {
             position: absolute;
             bottom: 0;
@@ -350,26 +639,7 @@
             font-weight: 500;
         }
 
-        .fab {
-            position: absolute;
-            bottom: 100px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: #FFA500;
-            border-radius: 50%;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
-            transition: transform 0.2s ease;
-        }
-
-        .fab:hover {
-            transform: scale(1.1);
-        }
-
+        /* Modal Styles */
         .modal {
             position: fixed;
             top: 0;
@@ -420,29 +690,38 @@
             cursor: pointer;
         }
 
-        .btn-primary {
+        .btn-modal-primary {
             background: #FFA500;
             color: white;
         }
 
-        .btn-secondary {
+        .btn-modal-secondary {
             background: #E9ECEF;
             color: #6C757D;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FFA500;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .mobile-container {
+                margin: 10px;
+                max-width: calc(100vw - 20px);
+            }
         }
     </style>
 </head>
@@ -456,8 +735,8 @@
 
         <!-- App Header -->
         <div class="app-header">
-            <h1>Inno'v Group</h1>
-            <div class="notification-icon">
+            <h1 id="page-title">Inno'v Group</h1>
+            <div class="notification-icon" onclick="showNotifications()">
                 🔔
                 <div class="notification-dot"></div>
             </div>
@@ -465,184 +744,464 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Promotional Slider -->
-            <div class="promotional-slider">
-                <div class="slide active" style="background: linear-gradient(135deg, #FFA500, #FF6B35);">
-                    <div class="slide-badge">10%</div>
-                    <h2>Remise Mobile Exclusive</h2>
-                    <p>10% de réduction sur tous les services</p>
-                    <button class="slide-cta" onclick="showModal('Promotion activée! 🎉')">
-                        Commander Maintenant →
-                    </button>
-                </div>
-                <div class="slide" style="background: linear-gradient(135deg, #007BFF, #6F42C1);">
-                    <div class="slide-badge">Nouveau</div>
-                    <h2>Services IA Premium</h2>
-                    <p>Chatbot WhatsApp avec IA avancée</p>
-                    <button class="slide-cta" onclick="showModal('Découvrez nos services IA! 🤖')">
-                        Découvrir →
-                    </button>
-                </div>
-                <div class="slide" style="background: linear-gradient(135deg, #6F42C1, #28A745);">
-                    <div class="slide-badge">15%</div>
-                    <h2>Pack Marketing Digital</h2>
-                    <p>Solution complète pour votre entreprise</p>
-                    <button class="slide-cta" onclick="showModal('Consultez nos offres marketing! 📈')">
-                        Voir Offres →
-                    </button>
-                </div>
-                <div class="slide-indicators">
-                    <div class="indicator active" onclick="showSlide(0)"></div>
-                    <div class="indicator" onclick="showSlide(1)"></div>
-                    <div class="indicator" onclick="showSlide(2)"></div>
-                </div>
-            </div>
+            <!-- Login Page -->
+            <div class="page" id="login-page">
+                <div class="login-container">
+                    <div class="login-header">
+                        <div class="login-logo">🚀</div>
+                        <h2 class="login-title">Bon retour !</h2>
+                        <p class="login-subtitle">Connectez-vous à votre compte pour continuer</p>
+                    </div>
+                    
+                    <form class="login-form" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="login-email" placeholder="exemple@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe</label>
+                            <input type="password" class="form-input" id="login-password" placeholder="Votre mot de passe" required>
+                        </div>
+                        <button type="submit" class="login-btn" id="login-btn">
+                            Se connecter
+                        </button>
+                    </form>
 
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <h2 class="section-title">Actions Rapides</h2>
-                <div class="actions-grid">
-                    <div class="action-card" onclick="showModal('Service Design Logo sélectionné! 🎨')">
-                        <div class="action-icon" style="background: #FFA500;">🎨</div>
-                        <h3>Design Logo</h3>
-                        <p>Création de logo professionnel</p>
-                    </div>
-                    <div class="action-card" onclick="showModal('Service Site Web sélectionné! 💻')">
-                        <div class="action-icon" style="background: #007BFF;">💻</div>
-                        <h3>Site Web</h3>
-                        <p>Développement site responsive</p>
-                    </div>
-                    <div class="action-card" onclick="showModal('Service Marketing sélectionné! 📱')">
-                        <div class="action-icon" style="background: #28A745;">📱</div>
-                        <h3>Marketing</h3>
-                        <p>Campagne publicitaire digitale</p>
-                    </div>
-                    <div class="action-card" onclick="showModal('Service Chatbot IA sélectionné! 🤖')">
-                        <div class="action-icon" style="background: #6F42C1;">🤖</div>
-                        <h3>Chatbot IA</h3>
-                        <p>Assistant virtuel intelligent</p>
+                    <div class="demo-info">
+                        <div class="demo-title">Comptes de test:</div>
+                        <div class="demo-credentials">
+                            Admin: admin@inno-v-group.com / admin123<br>
+                            Client: client@example.com / client123
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Featured Services -->
-            <div class="featured-services">
-                <h2 class="section-title">Services Populaires</h2>
-                <div class="services-grid">
-                    <div class="service-card" onclick="showModal('Logo Design Premium sélectionné! Prix: 179€')">
-                        <div class="service-image">
-                            <div class="discount-badge">-10%</div>
+            <!-- Home Page -->
+            <div class="page active" id="home-page">
+                <!-- Promotional Slider -->
+                <div class="promotional-slider">
+                    <div class="slide active" style="background: linear-gradient(135deg, #FFA500, #FF6B35);">
+                        <div class="slide-badge">10%</div>
+                        <h2>Remise Mobile Exclusive</h2>
+                        <p>10% de réduction sur tous les services</p>
+                        <button class="slide-cta" onclick="showModal('Promotion activée! 🎉')">
+                            Commander Maintenant →
+                        </button>
+                    </div>
+                    <div class="slide" style="background: linear-gradient(135deg, #007BFF, #6F42C1);">
+                        <div class="slide-badge">Nouveau</div>
+                        <h2>Services IA Premium</h2>
+                        <p>Chatbot WhatsApp avec IA avancée</p>
+                        <button class="slide-cta" onclick="showModal('Découvrez nos services IA! 🤖')">
+                            Découvrir →
+                        </button>
+                    </div>
+                    <div class="slide" style="background: linear-gradient(135deg, #6F42C1, #28A745);">
+                        <div class="slide-badge">15%</div>
+                        <h2>Pack Marketing Digital</h2>
+                        <p>Solution complète pour votre entreprise</p>
+                        <button class="slide-cta" onclick="showModal('Consultez nos offres marketing! 📈')">
+                            Voir Offres →
+                        </button>
+                    </div>
+                    <div class="slide-indicators">
+                        <div class="indicator active" onclick="showSlide(0)"></div>
+                        <div class="indicator" onclick="showSlide(1)"></div>
+                        <div class="indicator" onclick="showSlide(2)"></div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2 class="section-title">Actions Rapides</h2>
+                    <div class="actions-grid">
+                        <div class="action-card" onclick="showModal('Service Design Logo sélectionné! 🎨')">
+                            <div class="action-icon" style="background: #FFA500;">🎨</div>
+                            <h3>Design Logo</h3>
+                            <p>Création de logo professionnel</p>
                         </div>
-                        <div class="service-content">
-                            <div class="service-title">Logo Design Premium</div>
-                            <div class="service-rating">
-                                <span class="stars">⭐⭐⭐⭐⭐</span>
-                                <span class="rating-text">4.8 (156)</span>
-                            </div>
-                            <div class="service-price">
-                                <span class="price">179€</span>
-                                <button class="order-btn">Commander</button>
+                        <div class="action-card" onclick="showModal('Service Site Web sélectionné! 💻')">
+                            <div class="action-icon" style="background: #007BFF;">💻</div>
+                            <h3>Site Web</h3>
+                            <p>Développement site responsive</p>
+                        </div>
+                        <div class="action-card" onclick="showModal('Service Marketing sélectionné! 📱')">
+                            <div class="action-icon" style="background: #28A745;">📱</div>
+                            <h3>Marketing</h3>
+                            <p>Campagne publicitaire digitale</p>
+                        </div>
+                        <div class="action-card" onclick="navigateToAI()">
+                            <div class="action-icon" style="background: #6F42C1;">🤖</div>
+                            <h3>Chatbot IA</h3>
+                            <p>Assistant virtuel intelligent</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profile-page">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar">👤</div>
+                    <div class="profile-name" id="profile-name">Jean Dupont</div>
+                    <div class="profile-email" id="profile-email">jean.dupont@example.com</div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Commandes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Terminées</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">Abonnements</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="action-btn btn-primary" onclick="navigateToAISettings()">
+                        🤖 Gérer mon IA
+                    </button>
+                    <button class="action-btn btn-secondary" onclick="showModal('Paramètres ouverts! ⚙️')">
+                        ⚙️ Paramètres
+                    </button>
+                    <button class="action-btn btn-danger" onclick="handleLogout()">
+                        🚪 Déconnexion
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Settings Page -->
+            <div class="page" id="ai-settings-page">
+                <div class="ai-settings">
+                    <div class="settings-header">
+                        <div class="settings-icon">🤖</div>
+                        <div class="settings-info">
+                            <h2>Configuration IA</h2>
+                            <p>Personnalisez votre assistant intelligent</p>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">🏢</div>
+                            <div class="section-title">Informations Business</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nom de l'entreprise *</label>
+                            <input type="text" class="form-input" id="business-name" placeholder="Inno'v Group" value="Inno'v Group">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Numéro WhatsApp *</label>
+                            <input type="tel" class="form-input" id="whatsapp-number" placeholder="+33612345678" value="+33612345678">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">🧠</div>
+                            <div class="section-title">Configuration IA</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Message de bienvenue *</label>
+                            <textarea class="form-input form-textarea" id="welcome-message" placeholder="Bonjour! Comment puis-je vous aider?">Bonjour! Bienvenue chez Inno'v Group. Comment puis-je vous aider aujourd'hui?</textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="switch-container">
+                                <div>
+                                    <div style="font-weight: 500;">Résumé quotidien</div>
+                                    <div style="font-size: 12px; color: #6C757D;">Recevoir un résumé des conversations chaque jour</div>
+                                </div>
+                                <div class="switch active" id="daily-summary-switch" onclick="toggleSwitch('daily-summary-switch')">
+                                    <div class="switch-thumb"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="service-card" onclick="showModal('Site Web Responsive sélectionné! Prix: 809€')">
-                        <div class="service-image">
-                            <div class="discount-badge">-10%</div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">⭐</div>
+                            <div class="section-title">Plan d'abonnement</div>
                         </div>
-                        <div class="service-content">
-                            <div class="service-title">Site Web Responsive</div>
-                            <div class="service-rating">
-                                <span class="stars">⭐⭐⭐⭐⭐</span>
-                                <span class="rating-text">4.9 (89)</span>
+                        <div class="radio-group">
+                            <div class="radio-item" onclick="selectPlan('basic')">
+                                <div class="radio-circle"></div>
+                                <div>
+                                    <div style="font-weight: 500;">Basic</div>
+                                    <div style="font-size: 12px; color: #6C757D;">100 messages/mois - 29€</div>
+                                </div>
                             </div>
-                            <div class="service-price">
-                                <span class="price">809€</span>
-                                <button class="order-btn">Commander</button>
+                            <div class="radio-item selected" onclick="selectPlan('pro')">
+                                <div class="radio-circle"></div>
+                                <div>
+                                    <div style="font-weight: 500;">Pro</div>
+                                    <div style="font-size: 12px; color: #6C757D;">500 messages/mois - 79€</div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="service-card" onclick="showModal('Campagne Facebook Ads sélectionnée! Prix: 269€')">
-                        <div class="service-image">
-                            <div class="discount-badge">-10%</div>
-                        </div>
-                        <div class="service-content">
-                            <div class="service-title">Campagne Facebook Ads</div>
-                            <div class="service-rating">
-                                <span class="stars">⭐⭐⭐⭐⭐</span>
-                                <span class="rating-text">4.7 (234)</span>
-                            </div>
-                            <div class="service-price">
-                                <span class="price">269€</span>
-                                <button class="order-btn">Commander</button>
+                            <div class="radio-item" onclick="selectPlan('premium')">
+                                <div class="radio-circle"></div>
+                                <div>
+                                    <div style="font-weight: 500;">Premium</div>
+                                    <div style="font-size: 12px; color: #6C757D;">Messages illimités - 149€</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="service-card" onclick="showModal('Branding Complet sélectionné! Prix: 539€')">
-                        <div class="service-image">
-                            <div class="discount-badge">-10%</div>
-                        </div>
-                        <div class="service-content">
-                            <div class="service-title">Branding Complet</div>
-                            <div class="service-rating">
-                                <span class="stars">⭐⭐⭐⭐⭐</span>
-                                <span class="rating-text">4.8 (67)</span>
-                            </div>
-                            <div class="service-price">
-                                <span class="price">539€</span>
-                                <button class="order-btn">Commander</button>
-                            </div>
-                        </div>
-                    </div>
+
+                    <button class="save-btn" onclick="saveAISettings()">
+                        Sauvegarder les paramètres
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="setActiveTab(0)">
+            <div class="nav-item active" onclick="setActiveTab(0)" id="nav-home">
                 <div class="nav-icon">🏠</div>
                 <div class="nav-label">Accueil</div>
             </div>
-            <div class="nav-item" onclick="setActiveTab(1)">
+            <div class="nav-item" onclick="setActiveTab(1)" id="nav-services">
                 <div class="nav-icon">🛍️</div>
                 <div class="nav-label">Services</div>
             </div>
-            <div class="nav-item" onclick="setActiveTab(2)">
+            <div class="nav-item" onclick="setActiveTab(2)" id="nav-orders">
                 <div class="nav-icon">📦</div>
                 <div class="nav-label">Commandes</div>
             </div>
-            <div class="nav-item" onclick="setActiveTab(3)">
+            <div class="nav-item" onclick="setActiveTab(3)" id="nav-ai">
                 <div class="nav-icon">🤖</div>
                 <div class="nav-label">IA</div>
             </div>
-            <div class="nav-item" onclick="setActiveTab(4)">
+            <div class="nav-item" onclick="setActiveTab(4)" id="nav-profile">
                 <div class="nav-icon">👤</div>
                 <div class="nav-label">Profil</div>
             </div>
         </div>
-
-        <!-- Floating Action Button -->
-        <button class="fab" onclick="showModal('Catalogue ouvert! 📱')">🛒</button>
     </div>
 
     <!-- Modal -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h3>Action Simulée</h3>
+            <h3 id="modal-title">Action</h3>
             <p id="modal-message">Message par défaut</p>
             <div class="modal-buttons">
-                <button class="btn btn-secondary" onclick="closeModal()">Fermer</button>
-                <button class="btn btn-primary" onclick="closeModal()">OK</button>
+                <button class="btn btn-modal-secondary" onclick="closeModal()">Fermer</button>
+                <button class="btn btn-modal-primary" onclick="closeModal()">OK</button>
             </div>
         </div>
     </div>
 
     <script>
+        // App State
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const indicators = document.querySelectorAll('.indicator');
+        let currentPage = 'home';
+        let isLoggedIn = false;
+        let currentUser = null;
+        let selectedPlan = 'pro';
 
+        // Mock user data
+        const mockUsers = {
+            'admin@inno-v-group.com': {
+                password: 'admin123',
+                name: 'Admin User',
+                email: 'admin@inno-v-group.com',
+                role: 'admin'
+            },
+            'client@example.com': {
+                password: 'client123',
+                name: 'Jean Dupont',
+                email: 'client@example.com',
+                role: 'client'
+            }
+        };
+
+        // Mock AI settings
+        let aiSettings = {
+            businessName: "Inno'v Group",
+            whatsappNumber: '+33612345678',
+            welcomeMessage: "Bonjour! Bienvenue chez Inno'v Group. Comment puis-je vous aider aujourd'hui?",
+            dailySummary: true,
+            subscriptionPlan: 'pro'
+        };
+
+        // Initialize app
+        function initApp() {
+            // Check if user is logged in (mock localStorage)
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                isLoggedIn = true;
+                showHomePage();
+            } else {
+                showLoginPage();
+            }
+            
+            startSlideshow();
+            loadAISettings();
+        }
+
+        // Authentication
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const loginBtn = document.getElementById('login-btn');
+            
+            // Show loading
+            loginBtn.innerHTML = '<span class="loading"></span> Connexion...';
+            loginBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                const user = mockUsers[email];
+                
+                if (user && user.password === password) {
+                    currentUser = user;
+                    isLoggedIn = true;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    showModal('Connexion réussie! 🎉', 'Bienvenue ' + user.name);
+                    setTimeout(() => {
+                        closeModal();
+                        showHomePage();
+                    }, 1500);
+                } else {
+                    showModal('Erreur de connexion', 'Email ou mot de passe incorrect');
+                }
+                
+                // Reset button
+                loginBtn.innerHTML = 'Se connecter';
+                loginBtn.disabled = false;
+            }, 1000);
+        }
+
+        function handleLogout() {
+            showModal('Déconnexion', 'Êtes-vous sûr de vouloir vous déconnecter?', [
+                { text: 'Annuler', action: 'closeModal()' },
+                { text: 'Déconnexion', action: 'confirmLogout()', primary: true }
+            ]);
+        }
+
+        function confirmLogout() {
+            currentUser = null;
+            isLoggedIn = false;
+            localStorage.removeItem('currentUser');
+            closeModal();
+            showLoginPage();
+            showModal('Déconnexion réussie', 'À bientôt! 👋');
+        }
+
+        // Page Navigation
+        function showLoginPage() {
+            hideAllPages();
+            document.getElementById('login-page').classList.add('active');
+            document.querySelector('.bottom-nav').style.display = 'none';
+            document.getElementById('page-title').textContent = 'Connexion';
+            currentPage = 'login';
+        }
+
+        function showHomePage() {
+            hideAllPages();
+            document.getElementById('home-page').classList.add('active');
+            document.querySelector('.bottom-nav').style.display = 'flex';
+            document.getElementById('page-title').textContent = "Inno'v Group";
+            setActiveNavTab(0);
+            currentPage = 'home';
+        }
+
+        function showProfilePage() {
+            hideAllPages();
+            document.getElementById('profile-page').classList.add('active');
+            document.getElementById('page-title').textContent = 'Mon Profil';
+            updateProfileInfo();
+            currentPage = 'profile';
+        }
+
+        function showAISettingsPage() {
+            hideAllPages();
+            document.getElementById('ai-settings-page').classList.add('active');
+            document.getElementById('page-title').textContent = 'Paramètres IA';
+            loadAISettings();
+            currentPage = 'ai-settings';
+        }
+
+        function hideAllPages() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+        }
+
+        function updateProfileInfo() {
+            if (currentUser) {
+                document.getElementById('profile-name').textContent = currentUser.name;
+                document.getElementById('profile-email').textContent = currentUser.email;
+                document.getElementById('profile-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Navigation
+        function setActiveTab(index) {
+            if (!isLoggedIn && index !== 0) {
+                showModal('Connexion requise', 'Veuillez vous connecter pour accéder à cette section');
+                return;
+            }
+
+            const pages = ['home', 'services', 'orders', 'ai', 'profile'];
+            const pageNames = ['Accueil', 'Services', 'Commandes', 'IA', 'Profil'];
+            
+            setActiveNavTab(index);
+            
+            switch(index) {
+                case 0:
+                    showHomePage();
+                    break;
+                case 1:
+                    showModal(pageNames[index] + ' sélectionné! 🛍️');
+                    break;
+                case 2:
+                    showModal(pageNames[index] + ' sélectionné! 📦');
+                    break;
+                case 3:
+                    navigateToAI();
+                    break;
+                case 4:
+                    showProfilePage();
+                    break;
+            }
+        }
+
+        function setActiveNavTab(index) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[index].classList.add('active');
+        }
+
+        function navigateToAI() {
+            if (!isLoggedIn) {
+                showModal('Connexion requise', 'Veuillez vous connecter pour accéder aux paramètres IA');
+                return;
+            }
+            showModal('Chatbot IA sélectionné! 🤖');
+        }
+
+        function navigateToAISettings() {
+            if (!isLoggedIn) {
+                showModal('Connexion requise', 'Veuillez vous connecter pour gérer votre IA');
+                return;
+            }
+            showAISettingsPage();
+        }
+
+        // Slideshow
         function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            
             slides[currentSlide].classList.remove('active');
             indicators[currentSlide].classList.remove('active');
             
@@ -653,29 +1212,124 @@
         }
 
         function nextSlide() {
+            const slides = document.querySelectorAll('.slide');
             const nextIndex = (currentSlide + 1) % slides.length;
             showSlide(nextIndex);
         }
 
-        // Auto-advance slides
-        setInterval(nextSlide, 4000);
-
-        function setActiveTab(index) {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
-            navItems[index].classList.add('active');
-            
-            const pages = ['Accueil', 'Services', 'Commandes', 'IA', 'Profil'];
-            showModal(`Page ${pages[index]} sélectionnée! 📱`);
+        function startSlideshow() {
+            setInterval(nextSlide, 4000);
         }
 
-        function showModal(message) {
+        // AI Settings
+        function loadAISettings() {
+            document.getElementById('business-name').value = aiSettings.businessName;
+            document.getElementById('whatsapp-number').value = aiSettings.whatsappNumber;
+            document.getElementById('welcome-message').value = aiSettings.welcomeMessage;
+            
+            const dailySummarySwitch = document.getElementById('daily-summary-switch');
+            if (aiSettings.dailySummary) {
+                dailySummarySwitch.classList.add('active');
+            } else {
+                dailySummarySwitch.classList.remove('active');
+            }
+            
+            selectedPlan = aiSettings.subscriptionPlan;
+            updatePlanSelection();
+        }
+
+        function toggleSwitch(switchId) {
+            const switchElement = document.getElementById(switchId);
+            switchElement.classList.toggle('active');
+        }
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            updatePlanSelection();
+        }
+
+        function updatePlanSelection() {
+            document.querySelectorAll('.radio-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            const plans = ['basic', 'pro', 'premium'];
+            const index = plans.indexOf(selectedPlan);
+            if (index !== -1) {
+                document.querySelectorAll('.radio-item')[index].classList.add('selected');
+            }
+        }
+
+        function saveAISettings() {
+            const businessName = document.getElementById('business-name').value;
+            const whatsappNumber = document.getElementById('whatsapp-number').value;
+            const welcomeMessage = document.getElementById('welcome-message').value;
+            const dailySummary = document.getElementById('daily-summary-switch').classList.contains('active');
+            
+            if (!businessName || !whatsappNumber || !welcomeMessage) {
+                showModal('Erreur', 'Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            // Validate WhatsApp number
+            const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+            if (!phoneRegex.test(whatsappNumber)) {
+                showModal('Erreur', 'Format de numéro WhatsApp invalide');
+                return;
+            }
+            
+            // Save settings
+            aiSettings = {
+                businessName,
+                whatsappNumber,
+                welcomeMessage,
+                dailySummary,
+                subscriptionPlan: selectedPlan
+            };
+            
+            // Simulate API call
+            const saveBtn = document.querySelector('.save-btn');
+            saveBtn.innerHTML = '<span class="loading"></span> Sauvegarde...';
+            saveBtn.disabled = true;
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = 'Sauvegarder les paramètres';
+                saveBtn.disabled = false;
+                showModal('Succès! 🎉', 'Paramètres sauvegardés avec succès');
+            }, 1000);
+        }
+
+        // Modal
+        function showModal(title, message = '', buttons = null) {
+            document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
+            
+            if (buttons) {
+                const buttonContainer = document.querySelector('.modal-buttons');
+                buttonContainer.innerHTML = '';
+                buttons.forEach(btn => {
+                    const button = document.createElement('button');
+                    button.className = `btn ${btn.primary ? 'btn-modal-primary' : 'btn-modal-secondary'}`;
+                    button.textContent = btn.text;
+                    button.onclick = () => eval(btn.action);
+                    buttonContainer.appendChild(button);
+                });
+            } else {
+                document.querySelector('.modal-buttons').innerHTML = `
+                    <button class="btn btn-modal-secondary" onclick="closeModal()">Fermer</button>
+                    <button class="btn btn-modal-primary" onclick="closeModal()">OK</button>
+                `;
+            }
+            
             document.getElementById('modal').classList.add('show');
         }
 
         function closeModal() {
             document.getElementById('modal').classList.remove('show');
+        }
+
+        function showNotifications() {
+            showModal('Notifications', 'Vous avez 3 nouvelles notifications 🔔');
         }
 
         // Close modal when clicking outside
@@ -685,30 +1339,11 @@
             }
         });
 
-        // Add some interactive animations
-        document.querySelectorAll('.action-card, .service-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-4px)';
-                this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-            });
-        });
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
 
-        // Simulate loading states
-        setTimeout(() => {
-            document.querySelectorAll('.service-card').forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('slide-in');
-                }, index * 100);
-            });
-        }, 500);
-
-        console.log('🚀 Inno\'v Group Mobile App Preview Loaded!');
-        console.log('📱 Features: Enhanced slider, Quick actions, Services grid, Navigation');
+        console.log('🚀 Inno\'v Group Mobile App Loaded!');
+        console.log('📱 Features: Authentication, Profile, AI Settings, Enhanced Slider');
         console.log('🎨 Brand colors: Orange (#FFA500), Blue (#007BFF)');
     </script>
 </body>
